@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0, target-densitydpi=device-dpi" />	
+    <script type="application/javascript" src="phonegap.js"></script>
+    <script type="application/javascript" src="scripts/fastclick.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+    <title></title>
+</head>
+<body>
+    <div id="logo"></div>
+    <div id="iconcontainer">
+        <div id="iconwrapper">
+            <div> </div>    
+            <a class="icon icon1" href="sub.html?lib=ll"><div>Katalog</div></a>
+            <a class="icon icon2" href="sub.html?lib=tll"><div>Hakkımızda</div></a>
+            <a class="icon icon8" href="sub.html?lib=i"><div>İletişim</div></a>
+			<a class="icon icon6" href="http://www.hukumdar.com.tr">Hükümdar Bilişim</a>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var _onLoad = function () {
+            var as = document.querySelectorAll("iconwraper a");
+            for (var i in as) as[i].addEventListener("click", function (e) { e.preventDefault();}, false);
+
+            var viewport = document.querySelectorAll("meta")[1];
+            viewport.content = "user-scalable=yes, initial-scale=" + (1 / window.devicePixelRatio) + ", minimum-scale=" + (1 / window.devicePixelRatio);
+            if (typeof (window.orientation) !== "undefined") {
+                navigator.splashscreen.hide();
+            }
+            new FastClick(document.querySelector("#iconwrapper"));
+            document.addEventListener("backbutton", function () {
+                navigator.app.exitApp();
+            }, false);
+        }
+        if (typeof (window.orientation) !== "undefined") {
+            document.addEventListener('deviceready', _onLoad, false);
+        } else {
+            window.addEventListener("load", _onLoad, false);
+        }
+        
+    </script>
+</body>
+</html>

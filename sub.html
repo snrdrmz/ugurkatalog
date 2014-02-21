@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0, target-densitydpi=device-dpi" />	
+    <title></title>
+	<link href="css/slider.css" rel="stylesheet" type="text/css">
+    <script type="application/javascript" src="phonegap.js"></script>
+    <script type="application/javascript" src="scripts/fastclick.js"></script>
+	<script type="application/javascript" src="scripts/swipeview.js"></script>
+    <script type="text/javascript">
+        var gallery,
+                    el,
+                    i,
+                    page,
+                    dots;
+        var _onLoad = function () {
+            document.addEventListener("backbutton", function () {
+                document.location.href = "index.html";
+            }, false);
+            var viewport = document.querySelectorAll("meta")[1];
+            viewport.content = "user-scalable=yes, initial-scale=" + (1 / window.devicePixelRatio) + ", minimum-scale=" + (1 / window.devicePixelRatio);
+            var scr = document.createElement("script");
+            scr.async = true;
+            scr.onload = function () {
+                document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+                gallery = new SwipeView('#wrapper', { numberOfPages: slides.images.length });
+
+                // Load initial data
+                for (i = 0; i < 3; i++) {
+                    page = i == 0 ? slides.images.length - 1 : i - 1;
+                    el = document.createElement('img');
+                    el.className = 'loading';
+                    el.src = slides.root + slides.images[page];
+                    if (window.screen.availWidth < window.screen.availHeight) el.style.width = "100%";
+                    else el.style.height = "100%";
+                    el.onload = function () { this.className = ''; }
+                    gallery.masterPages[i].appendChild(el);
+
+                    el = document.createElement('span');
+                    el.innerHTML = slides.desc;
+                    gallery.masterPages[i].appendChild(el);
+                    gallery.masterPages[i].addEventListener("click", function () {
+                        document.location.href = "sub2.html?" + this.querySelector("img").src;
+                    }, false);
+                    //gallery.masterPages[i].addEventListener("click", function () {
+                    //    document.location.href = "sub2.html?" + this.querySelector("img").src;
+                    //}, false);
+                }
+
+                //if (!slides || !slides.images || slides.images.length < 2) 
+                gallery.options.loop = false;
+
+                // navbar
+                var li = document.createElement("li");
+                li.id = "prev";
+                li.innerHTML = "&laquo;";
+                li.onclick = function () {
+                    gallery.prev();
+                }
+                document.querySelector("#nav").appendChild(li);
+                for (var c = 0; c < slides.images.length; c++) {
+                    li = document.createElement("li");
+                    li.index = c;
+                    li.className = c === 0 ? "selected" : "";
+                    li.innerHTML = (li.index + 1) * 1;
+                    li.onclick = function () {
+                        gallery.goToPage(this.index);
+                    }
+                    document.querySelector("#nav").appendChild(li);
+                }
+                li = document.createElement("li");
+                li.id = "next";
+                li.innerHTML = "&raquo;";
+                li.onclick = function () {
+                    gallery.next();
+                }
+                document.querySelector("#nav").appendChild(li);
+                dots = document.querySelectorAll('#nav li');
+
+                gallery.onFlip(function () {
+                    var el,
+                        upcoming,
+                        i;
+
+                    for (i = 0; i < 3; i++) {
+                        upcoming = gallery.masterPages[i].dataset.upcomingPageIndex;
+
+                        if (upcoming != gallery.masterPages[i].dataset.pageIndex) {
+                            el = gallery.masterPages[i].querySelector('img');
+                            el.className = 'loading';
+                            el.src = slides.root + slides.images[upcoming];
+                            if (window.screen.availWidth < window.screen.availHeight) el.style.width = "100%";
+                            else el.style.height = "100%";
+                            el = gallery.masterPages[i].querySelector('span');
+                            el.innerHTML = slides.desc;
+                        }
+                    }
+
+                    document.querySelector('#nav .selected').className = '';
+                    dots[gallery.pageIndex + 1].className = 'selected';
+                });
+
+                gallery.onMoveOut(function () {
+                    gallery.masterPages[gallery.currentMasterPage].className = gallery.masterPages[gallery.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
+                });
+
+                gallery.onMoveIn(function () {
+                    var className = gallery.masterPages[gallery.currentMasterPage].className;
+                    /(^|\s)swipeview-active(\s|$)/.test(className) || (gallery.masterPages[gallery.currentMasterPage].className = !className ? 'swipeview-active' : className + ' swipeview-active');
+                });
+                //new FastClick(document.querySelectorAll("#navwrapper ul")[0]);
+            }
+            document.querySelector("head").appendChild(scr);
+            scr.src = "scripts/" + document.location.search.split("=")[1] + ".js";
+        }
+        if (typeof (window.orientation) !== "undefined") {
+            document.addEventListener('deviceready', _onLoad, false);
+        } else {
+            window.addEventListener("load", _onLoad, false);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="wrapper"></div>
+    <div id="navwrapper">
+        <ul id="navhome">
+            <li><a href="index.html">&#x2302;</a></li>
+        </ul>
+        <ul id="nav">
+        </ul>
+    </div>
+</body>
+</html>

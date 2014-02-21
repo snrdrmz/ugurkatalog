@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <widget xmlns = "http://www.w3.org/ns/widgets"
+      xmlns:gap = "http://phonegap.com/ns/1.0"
+      id        = "teknar.ugur"
+      version   = "2.0.2">
+
+  <name>UĞUR KATALOG</name>
+
+  <description>Ürün Kataloğu</description>
+
+  <author href="http://www.teknarteknoloji.com" email="durmazsoner@gmail.com">Soner DURMAZ</author>
+  
+  <gap:platform name="ios" />
+  <gap:platform name="android" />
+    
+
+  <preference name="splash-screen-duration" value="15000"/>
+  <preference name="orientation" value="portrait" />
+  <preference name="phonegap-version" value="3.1.0" />
+
+  <icon src="resources/t57.png" gap:platform="ios" width="57" height="57" />
+  <icon src="resources/t72.png" gap:platform="ios" width="72" height="72" />
+  <icon src="resources/t114.png" gap:platform="ios" width="114" height="114" />
+  <!-- retina iPad support: PhoneGap 2.5.0+ only -->
+  <icon src="resources/t114.png" gap:platform="ios" width="144" height="144" />
+
+  <icon src="resources/t48.png" gap:platform="android" gap:density="mdpi" />
+  <icon src="resources/t72.png" gap:platform="android" gap:density="hdpi" />
+  <icon src="resources/t96.png" gap:platform="android" gap:density="xhdpi" />
+  <icon src="resources/t114.png" gap:platform="android" gap:density="xxhdpi" />
+      
+  <gap:splash src="resources/sp680.png" gap:platform="ios" width="640" height="960" />
+  <gap:splash src="resources/sp680.png" gap:platform="ios" width="640" height="1136" />
+
+  <gap:splash src="resources/sp680.png" gap:platform="android" gap:density="mdpi" />
+  <gap:splash src="resources/sp680.png" gap:platform="android" gap:density="hdpi" />
+  <gap:splash src="resources/sp680.png" gap:platform="android" gap:density="xhdpi" />
+  <gap:splash src="resources/sp680.png" gap:platform="android" gap:density="xxhdpi" />
+
+  <gap:plugin name="org.apache.cordova.device" />
+  <gap:plugin name="org.apache.cordova.splashscreen" />
+    
+  <access origin="*" /> 
+</widget>
